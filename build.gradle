@@ -4,6 +4,8 @@ buildscript {
     ext {
         springBootVersion = "1.5.3.RELEASE"
         springVersion = "4.3.8.RELEASE"
+        springCloudDependenciesVersion = "Dalston.SR4"
+        springCloudServicesVersion = "1.4.4.RELEASE"
         mysqlVersion = "6.0.6"
     }
 

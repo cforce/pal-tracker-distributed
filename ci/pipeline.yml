@@ -144,7 +144,7 @@ jobs:
     file: pal-tracker/ci/migrate.yml
     params:
       CF_USERNAME: {{cf-username}}
-      CF_APP: tracker_allocations
+      CF_APP: tracker-allocations
       CF_PASSWORD: {{cf-password}}
       CF_DATABASE: {{cf-database_allocations}}
       CF_DATABASE_USER: {{cf-database-user_allocations}}
@@ -158,7 +158,7 @@ jobs:
     file: pal-tracker/ci/migrate.yml
     params:
       CF_USERNAME: {{cf-username}}
-      CF_APP: tracker_backlog
+      CF_APP: tracker-backlog
       CF_PASSWORD: {{cf-password}}
       CF_DATABASE: {{cf-database_backlog}}
       CF_DATABASE_USER: {{cf-database-user_backlog}}
@@ -172,7 +172,7 @@ jobs:
     file: pal-tracker/ci/migrate.yml
     params:
       CF_USERNAME: {{cf-username}}
-      CF_APP: tracker_registration
+      CF_APP: tracker-registration
       CF_PASSWORD: {{cf-password}}
       CF_DATABASE: {{cf-database_registration}}
       CF_DATABASE_USER: {{cf-database-user_registration}}
@@ -186,7 +186,7 @@ jobs:
     file: pal-tracker/ci/migrate.yml
     params:
       CF_USERNAME: {{cf-username}}
-      CF_APP: tracker_timesheets
+      CF_APP: tracker-timesheets
       CF_PASSWORD: {{cf-password}}
       CF_DATABASE: {{cf-database_timesheets}}
       CF_DATABASE_USER: {{cf-database-user_timesheets}}
