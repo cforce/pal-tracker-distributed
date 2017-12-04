@@ -18,7 +18,15 @@ run:
     curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
     curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/4.2.0/flyway-commandline-4.2.0-linux-x64.tar.gz | tar -zx
     ./cf --version
-    ./cf login -a api.sys.pikes.pal.pivotal.io -u $CF_USERNAME -p $CF_PASSWORD -s sandbox
-    ./cf ssh -N -L 63306:192.168.16.87:3306 $CF_APP &
+    ./cf login -a api.sys.pikes.pal.pivotal.io -u $CF_USERNAME -p $CF_PASSWORD -s $CF_SPACE
+
+    GUID=$(./cf app $CF_APP --guid)
+    DB_HOST=$(./cf curl /v2/apps/$GUID/env | grep jdbcUrl | tr '/' ' ' | tr ':' ' ' | awk '{print $4}')
+    JDBC_URL=$(./cf curl /v2/apps/$GUID/env | grep jdbcUrl | awk '{print $2}' | tr '\"' ' ' | xargs)
+    DB_NAME=$(./cf curl /v2/apps/$GUID/env | grep "name\": \"cf_" | awk '{print $2}' | tr '\"' ' ' | awk '{print $1}')
+    DB_USER=$(./cf curl /v2/apps/$GUID/env | grep "\"username\":" | awk '{print $2}' | tr '\"' ' ' | awk '{print $1}')
+    DB_PASSWORD=$(./cf curl /v2/apps/$GUID/env | grep "\"password\":" | awk '{print $2}' | tr '\"' ' ' | awk '{print $1}')
+    echo "jdbcurl: $JDBC_URL dbname: $DB_NAME dbuser: $DB_USER dbpwd: $DB_PASSWORD"
+    ./cf ssh -N -L 63306:$DB_HOST:3306 $CF_APP &
     sleep 5
-    ./flyway-4.2.0/flyway -url="jdbc:mysql://127.0.0.1:63306/$CF_DATABASE" -locations=filesystem:databases/tracker clean migrate -user=$CF_DATABASE_USER -password=$CF_DATABASE_PASSWORD
+    ./flyway-4.2.0/flyway -url="jdbc:mysql://localhost:63306/$DB_NAME" -locations=filesystem:$CF_MIGRATION clean migrate -user=$DB_USER -password=$DB_PASSWORD

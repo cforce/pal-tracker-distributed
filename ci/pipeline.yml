@@ -136,58 +136,54 @@ jobs:
       path: timesheets-artifacts/timesheets-server*.jar
       current_app_name: tracker-timesheets
 
-- name: migrate_allocations
+- name: migrate-allocations
   plan:
   - get: pal-tracker
     passed: [build]
   - task: run migration
     file: pal-tracker/ci/migrate.yml
     params:
-      CF_USERNAME: {{cf-username}}
+      CF_SPACE: sandbox
       CF_APP: tracker-allocations
+      CF_MIGRATION: databases/allocations-database
+      CF_USERNAME: {{cf-username}}
       CF_PASSWORD: {{cf-password}}
-      CF_DATABASE: {{cf-database_allocations}}
-      CF_DATABASE_USER: {{cf-database-user_allocations}}
-      CF_DATABASE_PASSWORD: {{cf-database-password_allocations}}
 
-- name: migrate_backlog
+- name: migrate-backlog
   plan:
   - get: pal-tracker
     passed: [build]
   - task: run migration
     file: pal-tracker/ci/migrate.yml
     params:
-      CF_USERNAME: {{cf-username}}
+      CF_SPACE: sandbox
       CF_APP: tracker-backlog
+      CF_MIGRATION: databases/backlog-database
+      CF_USERNAME: {{cf-username}}
       CF_PASSWORD: {{cf-password}}
-      CF_DATABASE: {{cf-database_backlog}}
-      CF_DATABASE_USER: {{cf-database-user_backlog}}
-      CF_DATABASE_PASSWORD: {{cf-database-password_backlog}}
 
-- name: migrate_registration
+- name: migrate-registration
   plan:
   - get: pal-tracker
     passed: [build]
   - task: run migration
     file: pal-tracker/ci/migrate.yml
     params:
-      CF_USERNAME: {{cf-username}}
+      CF_SPACE: sandbox
       CF_APP: tracker-registration
+      CF_MIGRATION: databases/registration-database
+      CF_USERNAME: {{cf-username}}
       CF_PASSWORD: {{cf-password}}
-      CF_DATABASE: {{cf-database_registration}}
-      CF_DATABASE_USER: {{cf-database-user_registration}}
-      CF_DATABASE_PASSWORD: {{cf-database-password_registration}}
 
-- name: migrate_timesheets
+- name: migrate-timesheets
   plan:
   - get: pal-tracker
     passed: [build]
   - task: run migration
     file: pal-tracker/ci/migrate.yml
     params:
-      CF_USERNAME: {{cf-username}}
+      CF_SPACE: sandbox
       CF_APP: tracker-timesheets
+      CF_MIGRATION: databases/timesheets-database
+      CF_USERNAME: {{cf-username}}
       CF_PASSWORD: {{cf-password}}
-      CF_DATABASE: {{cf-database_timesheets}}
-      CF_DATABASE_USER: {{cf-database-user_timesheets}}
-      CF_DATABASE_PASSWORD: {{cf-database-password_timesheets}}
