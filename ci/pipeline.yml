@@ -135,3 +135,55 @@ jobs:
       manifest: pal-tracker/manifest-timesheets.yml
       path: timesheets-artifacts/timesheets-server*.jar
       current_app_name: tracker-timesheets
+
+- name: migrate_allocations
+  plan:
+  - get: pal-tracker
+    passed: [build]
+  - task: run migration
+    file: pal-tracker/ci/migrate.yml
+    params:
+      CF_USERNAME: {{cf-username}}
+      CF_PASSWORD: {{cf-password}}
+      CF_DATABASE: {{cf-database_allocations}}
+      CF_DATABASE_USER: {{cf-database-user_allocations}}
+      CF_DATABASE_PASSWORD: {{cf-database-password_allocations}}
+
+- name: migrate_backlog
+  plan:
+  - get: pal-tracker
+    passed: [build]
+  - task: run migration
+    file: pal-tracker/ci/migrate.yml
+    params:
+      CF_USERNAME: {{cf-username}}
+      CF_PASSWORD: {{cf-password}}
+      CF_DATABASE: {{cf-database_backlog}}
+      CF_DATABASE_USER: {{cf-database-user_backlog}}
+      CF_DATABASE_PASSWORD: {{cf-database-password_backlog}}
+
+- name: migrate_registration
+  plan:
+  - get: pal-tracker
+    passed: [build]
+  - task: run migration
+    file: pal-tracker/ci/migrate.yml
+    params:
+      CF_USERNAME: {{cf-username}}
+      CF_PASSWORD: {{cf-password}}
+      CF_DATABASE: {{cf-database_registration}}
+      CF_DATABASE_USER: {{cf-database-user_registration}}
+      CF_DATABASE_PASSWORD: {{cf-database-password_registration}}
+
+- name: migrate_timesheets
+  plan:
+  - get: pal-tracker
+    passed: [build]
+  - task: run migration
+    file: pal-tracker/ci/migrate.yml
+    params:
+      CF_USERNAME: {{cf-username}}
+      CF_PASSWORD: {{cf-password}}
+      CF_DATABASE: {{cf-database_timesheets}}
+      CF_DATABASE_USER: {{cf-database-user_timesheets}}
+      CF_DATABASE_PASSWORD: {{cf-database-password_timesheets}}

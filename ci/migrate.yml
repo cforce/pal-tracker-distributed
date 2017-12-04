@@ -1,0 +1,24 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: openjdk
+    tag: '8-jdk'
+
+inputs:
+  - name: pal-tracker
+
+run:
+  path: bash
+  args:
+  - -exc
+  - |
+    cd pal-tracker
+    curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
+    curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/4.2.0/flyway-commandline-4.2.0-linux-x64.tar.gz | tar -zx
+    ./cf --version
+    ./cf login -a api.sys.pikes.pal.pivotal.io -u $CF_USERNAME -p $CF_PASSWORD
+    ./cf ssh -N -L 63306:192.168.16.87:3306 pal-tracker &
+    sleep 5
+    ./flyway-4.2.0/flyway -url="jdbc:mysql://127.0.0.1:63306/$CF_DATABASE" -locations=filesystem:databases/tracker clean migrate -user=$CF_DATABASE_USER -password=$CF_DATABASE_PASSWORD
