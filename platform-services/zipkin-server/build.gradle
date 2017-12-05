@@ -1,0 +1,15 @@
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:$springCloudDependenciesVersion"
+    }
+}
+
+dependencies {
+    compile("org.springframework.cloud:spring-cloud-sleuth-zipkin-stream")
+    compile("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
+
+    runtime("io.zipkin.java:zipkin-autoconfigure-ui")
+}

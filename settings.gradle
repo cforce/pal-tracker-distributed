@@ -24,3 +24,4 @@ include "integration-test"
 
 include "platform-services:eureka-server"
 include "platform-services:oauth-server"
+include "platform-services:zipkin-server"
