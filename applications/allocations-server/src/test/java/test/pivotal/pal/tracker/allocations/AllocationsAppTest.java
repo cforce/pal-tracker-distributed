@@ -12,8 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AllocationsAppTest {
 
     @Test
-    //@RunWith(SpringJUnit4ClassRunner.class)
-    //@TestPropertySource(properties = "debug=true")
     public void embedded() {
         App.main(new String[]{});
 
