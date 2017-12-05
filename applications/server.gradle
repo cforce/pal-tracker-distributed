@@ -20,6 +20,19 @@ dependencies {
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry"
     compile "org.springframework.cloud:spring-cloud-starter-eureka"
     compile "io.pivotal.spring.cloud:spring-cloud-services-starter-circuit-breaker"
-
+    compile('org.springframework.cloud:spring-cloud-starter-hystrix')
+    compile "org.springframework.cloud:spring-cloud-starter-oauth2"
+    compile "io.pivotal.spring.cloud:spring-cloud-sso-connector:$springCloudSsoVersion"
+    compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
     testCompile project(":components:test-support")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
 }
+
+bootRun.environment([
+        "APPLICATION_OAUTH_ENABLED": true,
+        "SECURITY_OAUTH2_CLIENT_CLIENT_ID": "tracker-client",
+        "SECURITY_OAUTH2_CLIENT_CLIENT_SECRET": "supersecret",
+        "SECURITY_USER_NAME": "actuator",
+        "SECURITY_USER_PASSWORD": "operations4red"
+])
